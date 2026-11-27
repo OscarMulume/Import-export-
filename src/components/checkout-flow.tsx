@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRef, useState, type FormEvent } from "react";
+import { FlutterwaveCardButton } from "@/components/flutterwave-card-button";
 import { PaymentLogo } from "@/components/payment-logo";
 import { clearAccount, loadAccount, saveAccount } from "@/lib/account-storage";
 import { useCart } from "@/lib/cart-context";
@@ -16,6 +17,7 @@ import {
   type OrderStatus,
 } from "@/lib/order";
 import { saveOrder, updateOrderStatus } from "@/lib/order-storage";
+import { resolvePaymentProvider } from "@/lib/payments/provider";
 import {
   getMobileMoneyNumber,
   getPaymentMethod,
@@ -132,6 +134,7 @@ export function CheckoutFlow({ availableLogos }: { availableLogos: PaymentLogoId
   const [submitting, setSubmitting] = useState(false);
   const [order, setOrder] = useState<Order | null>(null);
   const [payError, setPayError] = useState<string | null>(null);
+  const [paymentMessage, setPaymentMessage] = useState<string | null>(null);
   const [accountInput, setAccountInput] = useState("");
   const [accountEmail, setAccountEmail] = useState("");
   const [accountError, setAccountError] = useState<string | null>(null);
@@ -192,6 +195,12 @@ export function CheckoutFlow({ availableLogos }: { availableLogos: PaymentLogoId
       return;
     }
 
+    if (methodId === "card" && !(customer.email ?? "").trim()) {
+      setErrors({ email: "L’e-mail est requis pour le paiement par carte." });
+      document.getElementById("champ-email")?.focus();
+      return;
+    }
+
     setSubmitting(true);
     setPayError(null);
 
@@ -218,10 +227,18 @@ export function CheckoutFlow({ availableLogos }: { availableLogos: PaymentLogoId
     }
   }
 
-  function handleMarkPaid() {
+  function handlePaymentResult(status: OrderStatus, message: string) {
     if (!order) return;
-    const updated = updateOrderStatus(order.reference, "awaiting_confirmation");
-    if (updated) setOrder(updated);
+    const stored = updateOrderStatus(order.reference, status);
+    setOrder(stored ?? { ...order, status });
+    setPaymentMessage(message);
+  }
+
+  function handleMarkPaid() {
+    handlePaymentResult(
+      "awaiting_confirmation",
+      "Paiement déclaré. La boutique doit encore le confirmer.",
+    );
   }
 
   if (!ready) {
@@ -231,6 +248,7 @@ export function CheckoutFlow({ availableLogos }: { availableLogos: PaymentLogoId
   if (order) {
     const method = getPaymentMethod(order.paymentMethod);
     const number = method ? getMobileMoneyNumber(method.id) : "";
+    const initiation = resolvePaymentProvider(order.paymentMethod).initiate(order);
 
     return (
       <div className="card mt-6 max-w-2xl space-y-4 p-6">
@@ -292,15 +310,31 @@ export function CheckoutFlow({ availableLogos }: { availableLogos: PaymentLogoId
               </p>
             </div>
           )
+        ) : initiation.kind === "checkout" ? (
+          <div className="space-y-2 rounded-2xl bg-surface-alt p-4 text-sm">
+            <p className="font-semibold">Paiement par carte via Flutterwave</p>
+            {order.status === "paid" ? (
+              <p className="text-success">Paiement confirmé par le serveur.</p>
+            ) : (
+              <FlutterwaveCardButton order={order} onResult={handlePaymentResult} />
+            )}
+          </div>
         ) : (
           <div className="rounded-2xl bg-surface-alt p-4 text-sm">
             <p className="font-semibold">Paiement par carte</p>
             <p className="mt-1 text-muted">
-              Le paiement par carte via Flutterwave n’est pas encore configuré. Votre commande est
-              enregistrée en attente ; aucun débit n’a été effectué.
+              {initiation.kind === "unconfigured"
+                ? initiation.message
+                : "Le paiement par carte n’est pas disponible pour le moment."}
             </p>
           </div>
         )}
+
+        {paymentMessage ? (
+          <p className="text-xs text-muted" role="status">
+            {paymentMessage}
+          </p>
+        ) : null}
 
         <div className="flex flex-wrap gap-2">
           <Link

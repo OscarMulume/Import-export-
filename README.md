@@ -40,10 +40,22 @@ Ouvrir http://localhost:3000.
 Le module de paiement est **provider-agnostique** :
 
 - **Mode démonstration** (`NEXT_PUBLIC_DEMO_MODE=true`) : aucun débit réel, statuts explicitement de démo.
-- **Flutterwave** : clé publique côté navigateur + vérification **serveur** avec la clé secrète. Sans
-  vérification serveur réussie, la commande reste **en attente** — jamais « payée ».
+- **Flutterwave (carte)** : clé publique côté navigateur + vérification **serveur** avec la clé secrète
+  via la fonction Edge `supabase/functions/verify-payment`. Sans vérification serveur réussie, la
+  commande reste **en attente** — jamais « payée ». Le montant carte est débité en **USD** (le montant
+  en FC reste affiché à titre indicatif).
 - **Mobile money manuel** : instructions + référence ; la commande reste « en attente de confirmation »
   jusqu'à validation manuelle.
+
+La vérification serveur est fournie comme fonction Edge Supabase (compatible export statique) :
+
+```bash
+supabase functions deploy verify-payment
+supabase secrets set FLUTTERWAVE_SECRET_KEY=...
+```
+
+Puis renseigner `NEXT_PUBLIC_PAYMENT_VERIFY_URL`. Le schéma de commandes est dans
+`supabase/schema.sql` (écritures via `service_role`, jamais depuis le navigateur).
 
 Opérateurs pris en charge (RDC uniquement) : M-Pesa, Airtel Money, Orange Money, Afrimoney.
 
