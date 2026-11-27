@@ -6,21 +6,25 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40">
       <div className="glass-strong border-x-0 border-t-0">
-        <div className="container-page flex h-16 items-center justify-between gap-3">
+        <div className="container-page flex h-16 items-center justify-between gap-2">
           <Link
             href="/"
-            className="flex items-center gap-2.5 rounded-xl"
+            className="flex min-w-0 items-center gap-2 rounded-xl sm:gap-2.5"
             aria-label={`${site.name} — accueil`}
           >
             <span
               aria-hidden="true"
-              className="grid h-9 w-9 place-items-center rounded-xl bg-accent text-sm font-bold text-white"
+              className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-accent text-xs font-bold text-white sm:h-9 sm:w-9 sm:text-sm"
             >
               IE
             </span>
-            <span className="flex flex-col leading-tight">
-              <span className="text-base font-semibold tracking-tight">{site.name}</span>
-              <span className="text-[11px] text-muted">Import Chine · RDC</span>
+            <span className="flex min-w-0 flex-col leading-tight">
+              <span className="truncate text-sm font-semibold tracking-tight sm:text-base">
+                {site.name}
+              </span>
+              <span className="truncate text-[10px] text-muted sm:text-[11px]">
+                Import Chine · RDC
+              </span>
             </span>
           </Link>
 
@@ -36,15 +40,15 @@ export function SiteHeader() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
-            <Link href="/panier" className="btn btn-primary text-sm">
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+            <Link href="/panier" className="btn btn-primary btn-compact">
               Panier
               <CartCount />
             </Link>
 
             <details className="relative md:hidden">
               <summary
-                className="btn btn-ghost list-none text-sm [&::-webkit-details-marker]:hidden"
+                className="btn btn-ghost btn-compact list-none [&::-webkit-details-marker]:hidden"
                 aria-label="Ouvrir le menu"
               >
                 Menu

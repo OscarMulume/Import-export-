@@ -65,7 +65,7 @@ export function StoreBot() {
           id="assistant-boutique"
           role="dialog"
           aria-label="Assistant de la boutique"
-          className="glass-strong fixed bottom-20 right-4 z-40 flex w-[min(22rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-3xl shadow-2xl animate-fade-up"
+          className="glass-strong panel-opaque fixed bottom-16 right-4 z-40 flex max-h-[calc(100dvh-5rem)] w-[min(22rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-3xl shadow-2xl animate-fade-up"
           onKeyDown={(event) => {
             if (event.key === "Escape") setOpen(false);
           }}
@@ -87,7 +87,7 @@ export function StoreBot() {
 
           <div
             ref={listRef}
-            className="flex max-h-80 flex-col gap-3 overflow-y-auto px-4 py-3"
+            className="flex min-h-0 max-h-72 flex-col gap-3 overflow-y-auto px-4 py-3 sm:max-h-80"
             aria-live="polite"
           >
             {messages.map((message) => (

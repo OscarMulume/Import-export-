@@ -119,6 +119,12 @@
     border: 1px solid var(--border);
   }
 
+  .panel-opaque {
+    background: var(--surface-solid);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .card {
     background: var(--surface-solid);
     border: 1px solid var(--border);
@@ -177,6 +183,18 @@
 
   .btn-ghost:hover {
     background: var(--surface-alt);
+  }
+
+  .btn-compact {
+    padding-inline: 0.7rem;
+    font-size: 0.78rem;
+  }
+
+  @media (min-width: 640px) {
+    .btn-compact {
+      padding-inline: 1.1rem;
+      font-size: 0.925rem;
+    }
   }
 
   .badge {
