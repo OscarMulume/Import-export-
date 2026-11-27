@@ -1,5 +1,7 @@
 import { logoMeta, type PaymentLogoId } from "@/lib/payment";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export function PaymentLogo({
   id,
   available,
@@ -15,7 +17,7 @@ export function PaymentLogo({
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={`/logos/${id}.svg`}
+        src={`${basePath}/logos/${id}.svg`}
         alt=""
         className={`h-6 w-auto ${className}`}
         loading="lazy"

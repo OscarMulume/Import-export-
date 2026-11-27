@@ -67,15 +67,23 @@ Opérateurs pris en charge (RDC uniquement) : M-Pesa, Airtel Money, Orange Money
 
 ## Déploiement
 
-Le site est conçu pour un export statique (GitHub Pages) en mode démonstration :
+Le site est publié automatiquement sur GitHub Pages par `.github/workflows/pages.yml` à chaque push sur
+`main` : **https://oscarmulume.github.io/Import-export-/**.
 
-```bash
-NEXT_OUTPUT=export npm run build
+- Source Pages : « GitHub Actions ».
+- Build : `NEXT_OUTPUT=export` et `NEXT_PUBLIC_BASE_PATH=/Import-export-` (sous-chemin du dépôt).
+- Le workflow enchaîne lint, typecheck, tests, build statique, puis publie `out/`.
+
+En local, l'export statique se lance ainsi (PowerShell) :
+
+```powershell
+$env:NEXT_OUTPUT="export"
+$env:NEXT_PUBLIC_BASE_PATH="/Import-export-"
+npm run build
 ```
 
-Le dossier `out/` peut être publié tel quel. Pour les paiements réels (vérification serveur), déployer
-sur un hébergement avec fonctions serveur (Render, Cloudflare Pages avec runtime) et configurer les
-variables d'environnement.
+Le dossier `out/` peut être publié tel quel. Pour les paiements réels (vérification serveur), la fonction
+Edge Supabase reste nécessaire ; le reste du site peut rester statique.
 
 ## À confirmer (blocages)
 
