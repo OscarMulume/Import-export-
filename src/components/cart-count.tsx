@@ -9,7 +9,8 @@ export function CartCount() {
 
   return (
     <span
-      className="ml-1 inline-grid min-w-5 place-items-center rounded-full bg-white/25 px-1.5 text-[11px] font-bold"
+      key={count}
+      className="ml-1 inline-grid min-w-5 animate-pop place-items-center rounded-full bg-white/25 px-1.5 text-[11px] font-bold"
       aria-label={`${count} article${count > 1 ? "s" : ""} dans le panier`}
     >
       {count}

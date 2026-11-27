@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { DemoBanner } from "@/components/demo-banner";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { StoreBot } from "@/components/store-bot";
 import { CartProvider } from "@/lib/cart-context";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -59,10 +60,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <div className="flex min-h-dvh flex-col">
             <SiteHeader />
             <DemoBanner />
-            <main id="contenu" className="flex-1">
+            <main id="contenu" className="flex-1 animate-fade-in">
               {children}
             </main>
             <SiteFooter />
+            <StoreBot />
           </div>
         </CartProvider>
       </body>

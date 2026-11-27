@@ -28,7 +28,11 @@ export function AddToCartButton({
   }
 
   return (
-    <button type="button" className={className} onClick={handleClick}>
+    <button
+      type="button"
+      className={added ? `${className} animate-pop` : className}
+      onClick={handleClick}
+    >
       <span aria-live="polite">{added ? "Ajouté au panier" : "Ajouter au panier"}</span>
     </button>
   );
