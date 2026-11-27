@@ -61,7 +61,7 @@ export default function Home() {
               {categories.map((category, index) => (
                 <Link
                   key={category.slug}
-                  href={`/catalogue?categorie=${category.slug}`}
+                  href={`/catalogue/${category.slug}`}
                   className="card card-hover flex items-center justify-between gap-4 p-4"
                 >
                   <div>
@@ -104,7 +104,7 @@ export default function Home() {
           {categories.map((category) => (
             <Link
               key={category.slug}
-              href={`/catalogue?categorie=${category.slug}`}
+              href={`/catalogue/${category.slug}`}
               className="card card-hover group overflow-hidden"
             >
               <div

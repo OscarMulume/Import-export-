@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CartCount } from "@/components/cart-count";
 import { navigation, site } from "@/lib/site";
 
 export function SiteHeader() {
@@ -38,6 +39,7 @@ export function SiteHeader() {
           <div className="flex items-center gap-2">
             <Link href="/panier" className="btn btn-primary text-sm">
               Panier
+              <CartCount />
             </Link>
 
             <details className="relative md:hidden">

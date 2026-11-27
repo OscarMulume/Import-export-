@@ -7,12 +7,16 @@ Stack : Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, Vitest, 
 
 | Étape | Fichiers | Tests | Commit | Tag | Poussé |
 |---|---|---|---|---|---|
-| 1a — Socle : scaffold Next.js/TS/Tailwind, design system Liquid Glass, layout FR, header/footer, bandeau démo, accueil, pages provisoires, utilitaires USD/CDF + tests, AGENTS.md, README, .env.example | `next.config.ts`, `src/app/{layout,page,globals.css}`, `src/app/{catalogue,panier,suivi,aide}/page.tsx`, `src/components/*`, `src/lib/{money,site}.ts`, `src/lib/money.test.ts`, `AGENTS.md`, `README.md`, `.env.example`, `vitest.config.mts`, `package.json` | lint OK · typecheck OK · 9 tests OK · build OK (8 routes statiques) | ce commit | `v0.1.0-socle` | oui |
+| 1a — Socle : scaffold Next.js/TS/Tailwind, design system Liquid Glass, layout FR, header/footer, bandeau démo, accueil, pages provisoires, utilitaires USD/CDF + tests, AGENTS.md, README, .env.example | `next.config.ts`, `src/app/{layout,page,globals.css}`, `src/app/{catalogue,panier,suivi,aide}/page.tsx`, `src/components/*`, `src/lib/{money,site}.ts`, `src/lib/money.test.ts`, `AGENTS.md`, `README.md`, `.env.example`, `vitest.config.mts`, `package.json` | lint OK · typecheck OK · 9 tests OK · build OK (8 routes statiques) | `b049c0b` | `v0.1.0-socle` | oui |
+| 1b — Catalogue de démonstration (9 produits), pages catégorie et produit, panier persistant (localStorage), compteur, ajout au panier, tests du panier | `src/lib/{catalogue,cart,cart-context}.ts(x)`, `src/lib/cart.test.ts`, `src/components/{product-card,product-visual,add-to-cart-button,cart-count,cart-view}.tsx`, `src/app/catalogue/**`, `src/app/produit/[slug]/page.tsx`, `src/app/panier/page.tsx`, `src/app/commande/page.tsx`, `src/app/page.tsx`, `src/app/layout.tsx`, `src/components/site-header.tsx` | lint OK · typecheck OK · 19 tests OK · build OK (21 routes) | ce commit | `v0.1.0-catalogue` | oui |
 
 ## Vérification indépendante (@verificateur)
 
-Verdict : **VERT** — prêt à committer. Lint, typecheck, tests (9/9) et build vérifiés ; aucun secret en
-dur ; `.env*` ignoré sauf `.env.example` ; opérateurs RDC uniquement ; accessibilité et design conformes.
+Verdicts : **VERT** sur 1a et 1b — prêts à committer.
+
+- 1a : lint, typecheck, 9 tests et build vérifiés ; aucun secret en dur ; `.env*` ignoré sauf `.env.example`.
+- 1b : lint, typecheck, 19 tests et build (21 routes) vérifiés ; produits et prix explicitement étiquetés
+  « démonstration » ; panier persistant sans erreur d'hydratation ; opérateurs RDC uniquement.
 
 ## Décisions et points d'honnêteté
 
