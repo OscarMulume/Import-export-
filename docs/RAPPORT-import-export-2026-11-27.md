@@ -8,7 +8,8 @@ Stack : Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, Vitest, 
 | Étape | Fichiers | Tests | Commit | Tag | Poussé |
 |---|---|---|---|---|---|
 | 1a — Socle : scaffold Next.js/TS/Tailwind, design system Liquid Glass, layout FR, header/footer, bandeau démo, accueil, pages provisoires, utilitaires USD/CDF + tests, AGENTS.md, README, .env.example | `next.config.ts`, `src/app/{layout,page,globals.css}`, `src/app/{catalogue,panier,suivi,aide}/page.tsx`, `src/components/*`, `src/lib/{money,site}.ts`, `src/lib/money.test.ts`, `AGENTS.md`, `README.md`, `.env.example`, `vitest.config.mts`, `package.json` | lint OK · typecheck OK · 9 tests OK · build OK (8 routes statiques) | `b049c0b` | `v0.1.0-socle` | oui |
-| 1b — Catalogue de démonstration (9 produits), pages catégorie et produit, panier persistant (localStorage), compteur, ajout au panier, tests du panier | `src/lib/{catalogue,cart,cart-context}.ts(x)`, `src/lib/cart.test.ts`, `src/components/{product-card,product-visual,add-to-cart-button,cart-count,cart-view}.tsx`, `src/app/catalogue/**`, `src/app/produit/[slug]/page.tsx`, `src/app/panier/page.tsx`, `src/app/commande/page.tsx`, `src/app/page.tsx`, `src/app/layout.tsx`, `src/components/site-header.tsx` | lint OK · typecheck OK · 19 tests OK · build OK (21 routes) | ce commit | `v0.1.0-catalogue` | oui |
+| 1b — Catalogue de démonstration (9 produits), pages catégorie et produit, panier persistant (localStorage), compteur, ajout au panier, tests du panier | `src/lib/{catalogue,cart,cart-context}.ts(x)`, `src/lib/cart.test.ts`, `src/components/{product-card,product-visual,add-to-cart-button,cart-count,cart-view}.tsx`, `src/app/catalogue/**`, `src/app/produit/[slug]/page.tsx`, `src/app/panier/page.tsx`, `src/app/commande/page.tsx`, `src/app/page.tsx`, `src/app/layout.tsx`, `src/components/site-header.tsx` | lint OK · typecheck OK · 19 tests OK · build OK (21 routes) | `bf3bb1e` | `v0.1.0-catalogue` | oui |
+| 1c — Checkout invité, compte optionnel (démo locale), paiement en un clic sur le logo, instructions mobile money manuel, suivi par référence, logos officiels si présents sinon badge neutre | `src/lib/{payment,payment-logos,order,order-storage,account-storage}.ts`, `src/lib/order.test.ts`, `src/components/{checkout-flow,order-lookup,payment-logo}.tsx`, `src/app/commande/page.tsx`, `src/app/suivi/page.tsx`, `public/logos/README.md` | lint OK · typecheck OK · 29 tests OK · build OK (21 routes) · export statique OK | ce commit | `v0.1.0-checkout` | oui |
 
 ## Vérification indépendante (@verificateur)
 
@@ -17,6 +18,10 @@ Verdicts : **VERT** sur 1a et 1b — prêts à committer.
 - 1a : lint, typecheck, 9 tests et build vérifiés ; aucun secret en dur ; `.env*` ignoré sauf `.env.example`.
 - 1b : lint, typecheck, 19 tests et build (21 routes) vérifiés ; produits et prix explicitement étiquetés
   « démonstration » ; panier persistant sans erreur d'hydratation ; opérateurs RDC uniquement.
+- 1c : code et tests **VERTS** (29 tests, build 21 routes, export statique OK). Le vérificateur a signalé
+  un seul point bloquant : les fichiers n'étaient pas encore commités/poussés — c'est l'objet du commit
+  de cette étape. Aucun statut « payé » n'est attribué sans confirmation réelle ; le bouton « J'ai
+  effectué le paiement » ne passe qu'à « paiement à confirmer ».
 
 ## Décisions et points d'honnêteté
 
@@ -30,11 +35,13 @@ Verdicts : **VERT** sur 1a et 1b — prêts à committer.
 
 ## Reste à faire (étape 1)
 
-1b. Catalogue (démo étiquetée) + panier + pages produit.
-1c. Logos de paiement + checkout invité en un clic + compte optionnel.
-1d. Module de paiement provider-agnostique (Flutterwave + repli mobile money manuel).
+1d. Module de paiement provider-agnostique (adaptateur Flutterwave + vérification serveur + repli
+mobile money manuel), persistance Supabase des commandes.
 1e. Animations/micro-interactions + bot boutique.
 1f. Déploiement (export statique GitHub Pages) + preview complet.
+
+Bloqué en attente d'Oscar : logos officiels SVG, clés Flutterwave, numéros mobile money, produits/prix
+réels et photos, projet Supabase.
 
 ## Questions pour Oscar
 
